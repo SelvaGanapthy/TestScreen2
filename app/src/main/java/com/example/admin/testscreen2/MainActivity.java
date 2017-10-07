@@ -5,44 +5,36 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    RelativeLayout include1, include2, include3;
     EditText new_lead_Name, new_lead_phoneno, new_lead_Email, new_lead_Projects;
     String phoneValid = "[987]";
     Pattern pattern_Email = Pattern.compile("^.+@.+\\..+$");
-    ImageView newLead_buttonNxt, emoji_happy, emoji_very_happy, emoji_sad;
+    ImageView newLead_feedbackReg_buttonNxt, newLead_conversDetail_bNxt, emoji_happy, emoji_very_happy, emoji_sad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialize();
-        newLead_buttonNxt.setOnClickListener(new View.OnClickListener() {
+        newLead_feedbackReg_buttonNxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 newLead_Validate();
             }
         });
-        emoji_happy.setOnClickListener(new View.OnClickListener() {
+        newLead_conversDetail_bNxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emoji_happy.setImageResource(R.drawable.hover_emoji_happy);
-            }
-        });
-        emoji_very_happy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                emoji_very_happy.setImageResource(R.drawable.hover_emoji_veryhappy);
-            }
-        });
-        emoji_sad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                emoji_sad.setImageResource(R.drawable.hover_emoji_sad);
+                include1.setVisibility(View.GONE);
+                include2.setVisibility(View.GONE);
+                include3.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -55,7 +47,15 @@ public class MainActivity extends AppCompatActivity {
         emoji_happy = (ImageView) findViewById(R.id.emojihappy);
         emoji_sad = (ImageView) findViewById(R.id.emojisad);
         emoji_very_happy = (ImageView) findViewById(R.id.emojiveryhappy);
-        newLead_buttonNxt = (ImageView) findViewById(R.id.newLead_buttonNxt);
+        newLead_feedbackReg_buttonNxt = (ImageView) findViewById(R.id.newLead_feedbackReg_buttonNxt);
+        newLead_conversDetail_bNxt = (ImageView) findViewById(R.id.newLead_conversDetail_bNxt);
+        include1 = (RelativeLayout) findViewById(R.id.include1);
+        include2 = (RelativeLayout) findViewById(R.id.include2);
+        include3 = (RelativeLayout) findViewById(R.id.include3);
+        emoji_happy.setImageResource(R.drawable.hover_emoji_happy);
+        emoji_happy.setOnClickListener(this);
+        emoji_very_happy.setOnClickListener(this);
+        emoji_sad.setOnClickListener(this);
     }
 
     private void newLead_Validate() {
@@ -81,11 +81,34 @@ public class MainActivity extends AppCompatActivity {
             f4 = false;
         }
         if (f1 && f2 && f3 && f4) {
-            Toast.makeText(getApplicationContext(), "correct", Toast.LENGTH_SHORT).show();
+            include1.setVisibility(View.GONE);
+            include2.setVisibility(View.VISIBLE);
+            include3.setVisibility(View.GONE);
         }
 
 
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.emojisad:
+                emoji_sad.setImageResource(R.drawable.hover_emoji_sad);
+                emoji_happy.setImageResource(R.drawable.emoji_happy);
+                emoji_very_happy.setImageResource(R.drawable.emoji_veryhappy);
+                break;
+            case R.id.emojihappy:
+                emoji_happy.setImageResource(R.drawable.hover_emoji_happy);
+                emoji_sad.setImageResource(R.drawable.emoji_sad);
+                emoji_very_happy.setImageResource(R.drawable.emoji_veryhappy);
+                break;
+            case R.id.emojiveryhappy:
+                emoji_very_happy.setImageResource(R.drawable.hover_emoji_veryhappy);
+                emoji_sad.setImageResource(R.drawable.emoji_sad);
+                emoji_happy.setImageResource(R.drawable.emoji_happy);
+                break;
+        }
+
+    }
 }
