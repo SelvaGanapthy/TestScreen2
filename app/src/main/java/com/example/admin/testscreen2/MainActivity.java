@@ -41,6 +41,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 include2.setVisibility(View.GONE);
                 include3.setVisibility(View.VISIBLE);
                 include4.setVisibility(View.GONE);
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog = new DatePickerDialog(MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                date.setText(dayOfMonth + "/"
+                                        + (monthOfYear + 1) + "/" + year);
+                                include1.setVisibility(View.GONE);
+                                include2.setVisibility(View.GONE);
+                                include3.setVisibility(View.GONE);
+                                include4.setVisibility(View.VISIBLE);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.setTitle("\t\tNEXT FOLLOW UP DETAILS");
+                datePickerDialog.show();
             }
         });
     }
@@ -118,28 +140,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 emoji_sad.setImageResource(R.drawable.emoji_sad);
                 emoji_happy.setImageResource(R.drawable.emoji_happy);
                 break;
-            case R.id.selectDate:
-                final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR);
-                int mMonth = c.get(Calendar.MONTH);
-                int mDay = c.get(Calendar.DAY_OF_MONTH);
-                datePickerDialog = new DatePickerDialog(MainActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // set day of month , month and year value in the edit text
-                                date.setText(dayOfMonth + "/"
-                                        + (monthOfYear + 1) + "/" + year);
-                                include1.setVisibility(View.GONE);
-                                include2.setVisibility(View.GONE);
-                                include3.setVisibility(View.GONE);
-                                include4.setVisibility(View.VISIBLE);
-
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
 
         }
 
