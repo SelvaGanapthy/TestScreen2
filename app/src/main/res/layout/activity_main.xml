@@ -34,6 +34,13 @@
         android:visibility="gone">
 
     </include>
+    <include
+        android:id="@+id/include4"
+        layout="@layout/newlead_nxtfollow_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
+    </include>
 
 </RelativeLayout>

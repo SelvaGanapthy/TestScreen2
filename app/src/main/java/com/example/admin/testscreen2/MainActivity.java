@@ -1,22 +1,27 @@
 package com.example.admin.testscreen2;
 
+import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    RelativeLayout include1, include2, include3;
-    EditText new_lead_Name, new_lead_phoneno, new_lead_Email, new_lead_Projects;
+    RelativeLayout include1, include2, include3, include4;
+    EditText new_lead_Name, new_lead_phoneno, new_lead_Email, new_lead_Projects, date;
     String phoneValid = "[987]";
     Pattern pattern_Email = Pattern.compile("^.+@.+\\..+$");
     ImageView newLead_feedbackReg_buttonNxt, newLead_conversDetail_bNxt, emoji_happy, emoji_very_happy, emoji_sad;
+
+    DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 include1.setVisibility(View.GONE);
                 include2.setVisibility(View.GONE);
                 include3.setVisibility(View.VISIBLE);
+                include4.setVisibility(View.GONE);
             }
         });
     }
@@ -52,10 +58,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         include1 = (RelativeLayout) findViewById(R.id.include1);
         include2 = (RelativeLayout) findViewById(R.id.include2);
         include3 = (RelativeLayout) findViewById(R.id.include3);
+        include4 = (RelativeLayout) findViewById(R.id.include4);
         emoji_happy.setImageResource(R.drawable.hover_emoji_happy);
         emoji_happy.setOnClickListener(this);
         emoji_very_happy.setOnClickListener(this);
         emoji_sad.setOnClickListener(this);
+        date = (EditText) findViewById(R.id.selectDate);
+        date.setOnClickListener(this);
     }
 
     private void newLead_Validate() {
@@ -84,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             include1.setVisibility(View.GONE);
             include2.setVisibility(View.VISIBLE);
             include3.setVisibility(View.GONE);
+            include4.setVisibility(View.GONE);
         }
 
 
@@ -108,6 +118,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 emoji_sad.setImageResource(R.drawable.emoji_sad);
                 emoji_happy.setImageResource(R.drawable.emoji_happy);
                 break;
+            case R.id.selectDate:
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog = new DatePickerDialog(MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                date.setText(dayOfMonth + "/"
+                                        + (monthOfYear + 1) + "/" + year);
+                                include1.setVisibility(View.GONE);
+                                include2.setVisibility(View.GONE);
+                                include3.setVisibility(View.GONE);
+                                include4.setVisibility(View.VISIBLE);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
         }
 
     }
